@@ -1,0 +1,18 @@
+{
+  "name": "noticeBoard_fullstack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MaciejMl/noticeBoard_fullstack.git",
+  "author": "MaciejMl <szypki@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.22",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongodb": "^5.6.0",
+    "mongoose": "5.7.1"
+  }
+}
