@@ -1,26 +1,54 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const path = require('path');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const helmet = require('helmet');
+require('dotenv').config();
+
+const { db, dbURI } = require('./db');
 
 const app = express();
-
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-let dbURI = '';
-
-dbURI = 'mongodb://localhost:27017/NoticeBoardDB';
-
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-
-db.once('open', () => {
-  console.log('Connected to the database');
-});
-
-db.on('error', (err) => console.log('Error ' + err));
-
+app.use(helmet());
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
 });
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors(corsOptions));
+}
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    store: MongoStore.create({ mongoUrl: dbURI }),
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV == 'production' },
+  })
+);
+
+app.use('/api', require('./routes/ads.routes'));
+// app.use('/auth', require('./routes/user.routes'));
+app.use('/auth', require('./routes/auth.routes'));
+
+app.use(express.static(path.join(__dirname, '/client/public')));
+
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
+
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not found...' });
+});
+
+module.exports = server;
