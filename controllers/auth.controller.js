@@ -48,7 +48,11 @@ exports.register = async (req, res) => {
       res.status(400).send({ message: 'Bad request' });
     }
   } catch (err) {
-    res.status(500).send({ message: err.message });
+    if (!req.file) {
+      res.status(400).send({ message: 'No file attached' });
+    } else {
+      res.status(500).send({ message: err.message });
+    }
   }
 };
 
