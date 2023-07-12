@@ -1,0 +1,25 @@
+.root {
+  border-bottom: 2px solid lighten(gray, 40%);
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  .text {
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.image {
+  img {
+    height: 350px;
+
+    @media (max-width: 575px) {
+      height: 205px;
+    }
+  }
+}

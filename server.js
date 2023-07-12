@@ -14,15 +14,6 @@ const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
 });
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200,
-  credentials: true,
-};
-
-if (process.env.NODE_ENV !== 'production') {
-  app.use(cors(corsOptions));
-}
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -35,15 +26,27 @@ app.use(
   })
 );
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors(corsOptions));
+}
+
+app.use(express.static(path.join(__dirname, '/public')));
+
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.use(express.static(path.join(__dirname, '/client/public')));
+
 app.use('/api', require('./routes/ads.routes'));
 // app.use('/auth', require('./routes/user.routes'));
 app.use('/auth', require('./routes/auth.routes'));
 
-app.use(express.static(path.join(__dirname, '/client/public')));
-
-app.use(express.static(path.join(__dirname, '/client/build')));
-
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
 

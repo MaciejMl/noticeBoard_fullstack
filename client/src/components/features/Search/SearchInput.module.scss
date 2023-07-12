@@ -1,0 +1,33 @@
+.root {
+  span {
+    font-weight: bold;
+    align-self: center;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    display: flex;
+  }
+}
+.nameInput {
+  max-width: 200px;
+  font-size: 20px;
+}
+
+.form {
+  max-width: 400px;
+  margin: 0 auto;
+
+  p {
+    display: flex;
+    align-items: center;
+
+    textarea {
+      width: 400px;
+    }
+  }
+}
+
+.search {
+  margin-right: 15px;
+}

@@ -22,13 +22,14 @@ exports.getSingle = async (req, res) => {
       res.json(updatedAds);
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };
 
 exports.newAdd = async (req, res) => {
   try {
-    let { title, content, price, date, opacity, info, user } = req.body;
+    let { title, content, price, date, location, info, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
     title = sanitize(title);
@@ -36,13 +37,13 @@ exports.newAdd = async (req, res) => {
     price = sanitize(price);
     date = sanitize(date);
     image = sanitize(req.file.filename);
-    opacity = sanitize(opacity);
+    location = sanitize(location);
     info = sanitize(info);
     user = sanitize(user);
 
     const filePath = path.join(
       __dirname,
-      `../client/public/img/uploads/${image}`
+      `../client/build/img/uploads/${image}`
     );
 
     if (
@@ -56,8 +57,8 @@ exports.newAdd = async (req, res) => {
       typeof content === 'string' &&
       date &&
       typeof date === 'string' &&
-      opacity &&
-      typeof opacity === 'string' &&
+      location &&
+      typeof location === 'string' &&
       info &&
       typeof info === 'string' &&
       req.file &&
@@ -77,7 +78,7 @@ exports.newAdd = async (req, res) => {
         price,
         date,
         image,
-        opacity,
+        location,
         info,
         user: req.session.user,
       });
@@ -89,13 +90,14 @@ exports.newAdd = async (req, res) => {
       res.status(400).send({ message: 'Bad request' });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };
 
 exports.editAds = async (req, res) => {
   try {
-    let { title, content, price, date, opacity, info, user } = req.body;
+    let { title, content, price, date, location, info, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
     title = sanitize(title);
@@ -103,7 +105,7 @@ exports.editAds = async (req, res) => {
     price = sanitize(price);
     date = sanitize(date);
     image = sanitize(req.file ? req.file.filename : '');
-    opacity = sanitize(opacity);
+    location = sanitize(location);
     info = sanitize(info);
     user = sanitize(user);
 
@@ -123,8 +125,8 @@ exports.editAds = async (req, res) => {
       typeof content === 'string' &&
       date &&
       typeof date === 'string' &&
-      opacity &&
-      typeof opacity === 'string' &&
+      location &&
+      typeof location === 'string' &&
       info &&
       typeof info === 'string'
     ) {
@@ -154,7 +156,7 @@ exports.editAds = async (req, res) => {
               price,
               date,
               image,
-              opacity,
+              location,
               info,
               user: req.session.user,
             },
@@ -171,6 +173,7 @@ exports.editAds = async (req, res) => {
       res.status(400).send({ message: 'Bad request' });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };
@@ -180,11 +183,13 @@ exports.eraseAds = async (req, res) => {
     const updatedAds = await Ads.findById(req.params.id);
     if (updatedAds) {
       await Ads.deleteOne({ _id: req.params.id });
+      deleteFile(filePath);
       res.json({ message: 'OK' });
     } else {
       res.status(404).json({ message: 'Element not found...' });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };
@@ -195,6 +200,7 @@ exports.searchAds = async (req, res) => {
       await Ads.find({ title: { $regex: `(?i)${req.params.searchPhrase}` } })
     );
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };

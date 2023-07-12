@@ -7,12 +7,14 @@ import { API_URL } from '../../../config';
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../../../redux/usersRedux';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const Login = () => {
         if (res.status === 200) {
           setStatus('success');
           dispatch(logIn({ login }));
+          navigate('/');
         } else if (res.status === 400) {
           setStatus('clientError');
         } else {
@@ -46,13 +49,6 @@ const Login = () => {
   return (
     <Form className='col-12 col-sm-3 mx-auto' onSubmit={handleSubmit}>
       <h1 className='my-4'>Login</h1>
-
-      {status === 'success' && (
-        <Alert variant='success'>
-          <Alert.Heading>Success!</Alert.Heading>
-          <p>You have successfully logged in!</p>
-        </Alert>
-      )}
 
       {status === 'serverError' && (
         <Alert variant='danger'>

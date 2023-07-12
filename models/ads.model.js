@@ -6,7 +6,7 @@ const adsSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   date: { type: String, required: true },
   image: { type: String, required: true },
-  opacity: { type: String, required: true },
+  location: { type: String, required: true },
   info: { type: String, required: true },
   user: { type: String, required: true, ref: 'User' },
 });
