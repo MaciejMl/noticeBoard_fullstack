@@ -1,0 +1,60 @@
+.root {
+  span {
+    font-weight: bold;
+    align-self: center;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    display: flex;
+  }
+}
+.nameInput {
+  max-width: 200px;
+  font-size: 20px;
+}
+
+.form {
+  max-width: 400px;
+  margin: 0 auto;
+
+  p {
+    display: flex;
+    align-items: center;
+
+    textarea {
+      width: 400px;
+    }
+  }
+}
+
+.name {
+  margin-right: 15px;
+}
+
+.date {
+  margin-right: 12px;
+}
+.price {
+  margin-right: 40px;
+}
+
+.pricewidth {
+  width: 100px;
+}
+
+.title {
+  margin-right: 55px;
+}
+
+.location {
+  margin-right: 23px;
+}
+
+.details {
+  margin-right: 38px;
+}
+
+.image {
+  margin-right: 34px;
+}

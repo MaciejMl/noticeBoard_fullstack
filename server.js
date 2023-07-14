@@ -43,7 +43,6 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/client/public')));
 
 app.use('/api', require('./routes/ads.routes'));
-// app.use('/auth', require('./routes/user.routes'));
 app.use('/auth', require('./routes/auth.routes'));
 
 app.get('*', (req, res) => {

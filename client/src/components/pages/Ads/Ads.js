@@ -26,31 +26,49 @@ const Ads = ({ title, location, image, _id }) => {
     navigate(`/ad/${_id}`);
   };
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    navigate(`/ad/edit/${_id}`);
+  };
 
   return (
     <Container className={clsx('px-0 pb-4 mt-4', styles.root)}>
-      <Stack direction='horizontal' gap={3} className='align-items-center'>
-        <img src={`${IMGS_URL}${image}`} alt='announcement_image' />
-        <h3 className='m-0'>{title}</h3>
-        <p className='m-0'>
-          <span>Location: </span>
-          {location}
-        </p>
-        <Button onClick={handleReadMore} className='ms-auto' variant='primary'>
-          Read more
-        </Button>
-        {loggedUser && (
-          <Button onClick={handleEdit} variant='primary'>
-            Edit Ad
-          </Button>
-        )}
-        {loggedUser && (
-          <Button onClick={handleRemove} variant='danger'>
-            Delete Ad
-          </Button>
-        )}
-      </Stack>
+      <div className={styles.cont}>
+        <div className={styles.image}>
+          <img src={`${IMGS_URL}${image}`} alt='announcement_image' />
+        </div>
+        <div className={styles.info}>
+          <Stack
+            direction='horizontal'
+            gap={3}
+            className={clsx('align-items-center', styles.stack)}
+          >
+            <h3 className='m-0'>{title}</h3>
+            <p className='m-0'>
+              <span>Location: </span>
+              {location}
+            </p>
+            <div className={styles.buttons}>
+              <Button
+                onClick={handleReadMore}
+                className='ms-auto'
+                variant='primary'
+              >
+                Read more
+              </Button>
+              {loggedUser && (
+                <Button onClick={handleEdit} variant='primary'>
+                  Edit Ad
+                </Button>
+              )}
+              {loggedUser && (
+                <Button onClick={handleRemove} variant='danger'>
+                  Delete Ad
+                </Button>
+              )}
+            </div>
+          </Stack>
+        </div>
+      </div>
     </Container>
   );
 };

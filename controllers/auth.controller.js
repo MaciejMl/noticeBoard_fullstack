@@ -94,6 +94,7 @@ exports.logout = async (req, res) => {
 
   req.session.destroy((err) => {
     if (err) {
+      console.log(err);
       res.status(500).send({ message: 'An error accurred during logout' });
     } else {
       res.send({ message: `User ${userLogin} is logged off` });

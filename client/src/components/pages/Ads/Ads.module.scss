@@ -6,6 +6,46 @@
   }
 }
 
-img {
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 150px;
+
+  img {
+    width: 225px;
+    height: 150px;
+    object-fit: cover;
+  }
+}
+
+.info {
+  display: flex;
+  flex-wrap: wrap;
+
+  .stack {
+    @media (max-width: 991px) {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 576px) {
+    justify-content: center;
+  }
+}
+
+.cont {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
+}
+
+.buttons {
+  button {
+    margin-left: 5px;
+  }
 }

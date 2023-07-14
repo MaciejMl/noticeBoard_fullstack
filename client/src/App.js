@@ -9,6 +9,8 @@ import Login from './components/pages/Login/Login';
 import Logout from './components/pages/Logout/Logout';
 import ReadAd from './components/pages/ReadAd/ReadAd';
 import AddAd from './components/pages/AddAd/AddAd';
+import Search from './components/pages/Search/Search';
+import AdEdit from './components/pages/AdEdit/AdEdit';
 
 const App = () => {
   return (
@@ -19,8 +21,8 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/ad/:id' element={<ReadAd />} />
           <Route path='/ad/add' element={<AddAd />} />
-          {/* <Route path='/ad/edit/:id' element={<AdEdit />} /> */}
-          {/* <Route path='/search/:searchPhrase' element={<Search />} /> */}
+          <Route path='/ad/edit/:id' element={<AdEdit />} />
+          <Route path='/search/:searchPhrase' element={<Search />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />

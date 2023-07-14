@@ -43,14 +43,16 @@ exports.newAdd = async (req, res) => {
 
     const filePath = path.join(
       __dirname,
-      `../client/build/img/uploads/${image}`
+      `../client/public/img/uploads/${image}`
     );
 
     if (
       title &&
       typeof title === 'string' &&
+      title.length >= 10 &&
       content &&
       typeof content === 'string' &&
+      content.length >= 20 &&
       price &&
       typeof price === 'string' &&
       content &&
@@ -182,6 +184,10 @@ exports.eraseAds = async (req, res) => {
   try {
     const updatedAds = await Ads.findById(req.params.id);
     if (updatedAds) {
+      const filePath = path.join(
+        __dirname,
+        `../client/public/img/uploads/${updatedAds.image}`
+      );
       await Ads.deleteOne({ _id: req.params.id });
       deleteFile(filePath);
       res.json({ message: 'OK' });

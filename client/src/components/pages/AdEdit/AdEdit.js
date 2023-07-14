@@ -1,30 +1,35 @@
 import { Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import styles from './AddAd.module.scss';
+import styles from './AdEdit.module.scss';
 import clsx from 'clsx';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import InputForm from '../../common/InputForm/InputForm';
 import { useState } from 'react';
-import { addAds } from '../../../redux/adsRedux';
 import { API_URL } from '../../../config';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import { useSelector } from 'react-redux';
 import { getUser } from '../../../redux/usersRedux';
+import { useParams } from 'react-router-dom';
+import { getAdById, editAd } from '../../../redux/adsRedux';
 
-const AddAd = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('');
-  const [date, setDate] = useState('');
-  const [info, setInfo] = useState('');
-  const [image, setImage] = useState('');
+const AdEdit = () => {
+  const { id } = useParams();
+  const user = useSelector(getUser);
+  const ad = useSelector((state) => getAdById(state, id));
+
+  const [title, setTitle] = useState(ad?.title || '');
+  const [content, setContent] = useState(ad?.content || '');
+  const [location, setLocation] = useState(ad?.location || '');
+  const [price, setPrice] = useState(ad?.price || '');
+  const [date, setDate] = useState(ad?.date || '');
+  const [info, setInfo] = useState(ad?.info || '');
+  const [image, setImage] = useState(ad?.image || '');
   const [status, setStatus] = useState('');
 
-  const user = useSelector(getUser);
+  console.log(id);
   console.log('zalogowany: ', user);
   console.log('image: ', image);
 
@@ -73,17 +78,17 @@ const AddAd = () => {
       fd.append('image', image);
 
       const options = {
-        method: 'POST',
+        method: 'PUT',
         body: fd,
         credentials: 'include',
       };
 
       setStatus('loading');
 
-      fetch(`${API_URL}/api/ads`, options)
+      fetch(`${API_URL}/api/ads/${id}`, options)
         .then((res) => {
           if (res.status === 201) {
-            dispatch(addAds(fd));
+            dispatch(editAd(fd));
             navigate('/');
           } else if (res.status === 400) {
             setStatus('clientError');
@@ -197,11 +202,11 @@ const AddAd = () => {
         </p>
 
         <Button type='submit' variant='primary'>
-          Add new
+          Update
         </Button>
       </Form>
     </Container>
   );
 };
 
-export default AddAd;
+export default AdEdit;
