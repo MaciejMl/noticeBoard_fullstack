@@ -76,6 +76,7 @@ const AdEdit = () => {
       fd.append('date', date);
       fd.append('info', info);
       fd.append('image', image);
+      fd.append('user', user.login);
 
       const options = {
         method: 'PUT',

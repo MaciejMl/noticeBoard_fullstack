@@ -10,9 +10,10 @@ import { getUser, logIn } from '../../../redux/usersRedux';
 import { fetchAds, removeAdRequest } from '../../../redux/adsRedux';
 import { IMGS_URL } from '../../../config';
 
-const Ads = ({ title, location, image, _id }) => {
+const Ads = ({ title, location, image, _id, user }) => {
   const navigate = useNavigate();
   const loggedUser = useSelector(getUser);
+  const adOwnerId = user?.login;
 
   const dispatch = useDispatch();
 
@@ -29,6 +30,8 @@ const Ads = ({ title, location, image, _id }) => {
   const handleEdit = () => {
     navigate(`/ad/edit/${_id}`);
   };
+
+  const adOwner = loggedUser && loggedUser.login === adOwnerId;
 
   return (
     <Container className={clsx('px-0 pb-4 mt-4', styles.root)}>
@@ -55,12 +58,12 @@ const Ads = ({ title, location, image, _id }) => {
               >
                 Read more
               </Button>
-              {loggedUser && (
+              {adOwner && (
                 <Button onClick={handleEdit} variant='primary'>
                   Edit Ad
                 </Button>
               )}
-              {loggedUser && (
+              {adOwner && (
                 <Button onClick={handleRemove} variant='danger'>
                   Delete Ad
                 </Button>
