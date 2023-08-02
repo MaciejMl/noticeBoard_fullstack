@@ -13,7 +13,7 @@ import { IMGS_URL } from '../../../config';
 const Ads = ({ title, location, image, _id, user }) => {
   const navigate = useNavigate();
   const loggedUser = useSelector(getUser);
-  const adOwnerId = user?.login;
+  const adOwnerLogin = user?.login;
 
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const Ads = ({ title, location, image, _id, user }) => {
     navigate(`/ad/edit/${_id}`);
   };
 
-  const adOwner = loggedUser && loggedUser.login === adOwnerId;
+  const adOwner = loggedUser && loggedUser.login === adOwnerLogin;
 
   return (
     <Container className={clsx('px-0 pb-4 mt-4', styles.root)}>
