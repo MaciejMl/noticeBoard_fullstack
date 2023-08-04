@@ -112,6 +112,16 @@ const AddAd = () => {
           <Alert variant='danger'>
             <Alert.Heading>Not enough data!</Alert.Heading>
             <p>You have to fill all the fields.</p>
+            {(title.length < 10 || title.length > 50) && (
+              <span className={styles.errorMessage}>
+                Name must be between 10-50 chars
+              </span>
+            )}
+            {(content.length < 20 || content.length > 1000) && (
+              <p className={styles.errorMessage}>
+                <span>Title must be between 20-1000 chars</span>
+              </p>
+            )}
           </Alert>
         )}
 

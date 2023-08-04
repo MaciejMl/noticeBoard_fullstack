@@ -36,15 +36,14 @@ exports.newAdd = async (req, res) => {
     content = sanitize(content);
     price = sanitize(price);
     date = sanitize(date);
-    image = sanitize(req.file.filename);
+    image = req.file ? sanitize(req.file.filename) : null;
     location = sanitize(location);
     info = sanitize(info);
     user = sanitize(user);
 
-    const filePath = path.join(
-      __dirname,
-      `../client/public/img/uploads/${image}`
-    );
+    const filePath = req.file
+      ? path.join(__dirname, `../client/public/img/uploads/${image}`)
+      : null;
 
     if (
       title &&
