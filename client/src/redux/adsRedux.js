@@ -54,11 +54,13 @@ const adsReducer = (statePart = [], action) => {
     case REMOVE_AD:
       return statePart.filter((ad) => ad._id !== action.adId);
     case ADD_AD:
-      return [...action.payload];
+      return [...statePart, action.payload];
     case SEARCH_AD:
       return [...action.payload];
     case EDIT_AD:
-      return [...action.payload];
+      return statePart.map((ad) =>
+        ad._id === action.payload._id ? action.payload : ad
+      );
     default:
       return statePart;
   }
